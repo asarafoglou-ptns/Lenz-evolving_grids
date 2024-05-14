@@ -1,6 +1,8 @@
 from app.grid_functions import Grid
-from app.shiny_extensions import unstyled_input_action_button
-from shiny import reactive
+from shiny import App, Inputs, Outputs, Session, reactive, render, ui
+
+from app.shiny_extensions import (session_is_active,
+                                 unstyled_input_action_button)
 
 def create_grid_ui(grid: Grid) -> Tag:
     """
@@ -63,3 +65,42 @@ def create_btn_id_list(dynamic_grid: reactive.Value[Grid]) -> List[str]:
             buttons_list.append(f"btn_{row_idx}_{col_idx}")
 
     return buttons_list
+
+
+async def update_board(
+        session: Session,
+        shiny_input: Inputs,
+        is_simulation_running: reactive.Value[bool],
+        dynamic_grid: reactive.Value[Grid],
+):
+    """
+    updates the board every 1/(2*n) seconds so that it depicts the new
+    generation of alive cells
+    """
+    # function is active as long as the session is active (as long as the
+    # website is open)
+    while session_is_active(session):
+        # watches if the simulation is running (every 0.1 seconds)
+        # noinspection PyProtectedMember
+        if not is_simulation_running._value:
+            await asyncio.sleep(0.1)
+            continue
+        # if the simulation is running [is_simulation_running == TRUE], the grid is updated
+        # noinspection PyProtectedMember
+        old_generation = dynamic_grid._value
+        new_generation = create_new_generation(old_generation)
+
+        # if the old generation is the same as the new generation we know that
+        # we got stuck and there is no need to simulate anymore.
+        if old_generation == new_generation:
+            is_simulation_running.set(False)
+            ui.notification_show("The game has reached a state of equilibrium.")
+            await reactive.flush()
+            continue
+
+        dynamic_grid.set(new_generation)
+        # notify shiny that a value has changed
+        await reactive.flush()
+        # then the function sleeps for 1/(2*n) seconds
+        # noinspection PyProtectedMember
+        await asyncio.sleep(1 / (2 * shiny_input.speed_slider._value))
