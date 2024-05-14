@@ -1,5 +1,6 @@
 from app.grid_functions import Grid
 from app.shiny_extensions import unstyled_input_action_button
+from shiny import reactive
 
 def create_grid_ui(grid: Grid) -> Tag:
     """
@@ -47,3 +48,18 @@ def create_grid_ui(grid: Grid) -> Tag:
 
     # return the finished grid and put it inside a grid-container
     return ui.tags.div({"class": "grid-container"}, *rows)
+
+
+def create_btn_id_list(dynamic_grid: reactive.Value[Grid]) -> List[str]:
+    """
+    Creates a list with all button_ids in the dynamic_grid.
+    :param dynamic_grid: The reactive grid containing button information.
+    :return: List of button IDs.
+    """
+    buttons_list = []
+
+    for row_idx, row in enumerate(dynamic_grid._value):
+        for col_idx, _ in enumerate(row):
+            buttons_list.append(f"btn_{row_idx}_{col_idx}")
+
+    return buttons_list
