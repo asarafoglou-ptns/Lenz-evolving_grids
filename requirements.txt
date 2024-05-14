@@ -1,1 +1,3 @@
 typing==3.10.0.0
+shiny==0.9.0
+htmltools==0.5.1
