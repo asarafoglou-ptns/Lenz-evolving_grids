@@ -74,3 +74,41 @@ def get_number_of_adjacent_live_cells(
 
     # return number of alive cells around a specific cell
     return number_live_cells
+
+
+def create_new_generation(grid: Grid) -> Grid:
+    """
+    determines which cells in an array live or die from one generation to the
+    next, based on their number of alive neighbours
+    :param grid: array with alive and dead cells, for which the next generation
+                 should be determined
+    :return: array with values indicating which cells survive/come alive/die in
+             the new generation
+    """
+    # first, I make a copy of the grid that holds the 'old generation'
+    array_copy = copy_grid(grid)
+    # get number of alive neighbours for each cell in the grid with the old
+    # generation
+    for row_idx, row in enumerate(grid):
+        for col_idx, cell_value in enumerate(row):
+            alive = get_number_of_adjacent_live_cells(grid, row_idx, col_idx)
+            # Apply the rules to keep cells alive, bring them alive, or kill
+            # cells to generate the new generation.
+            # The new generation of alive and dead cells is stored in the copy
+            # of the original grid.
+            if cell_value == 1:
+                # Kill cell if number of alive neighbours is < 2.
+                if alive < 2:
+                    array_copy[row_idx][col_idx] = 0
+                # Keep cell alive if number of alive cells is 2 or 3.
+                elif 2 <= alive <= 3:
+                    array_copy[row_idx][col_idx] = 1
+                # Kill cell if number of alive neighbours is > 3.
+                else:
+                    array_copy[row_idx][col_idx] = 0
+            else:
+                # Bring cell alive if the number of neighbours == 3.
+                if alive == 3:
+                    array_copy[row_idx][col_idx] = 1
+
+    return array_copy
