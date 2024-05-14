@@ -23,3 +23,54 @@ def is_valid_pos(row, column, nrows, ncols) -> bool:
     # 2. 'column' is not smaller than 0 and not bigger than the total number of
     #    columns in the grid
     return 0 <= row < nrows and 0 <= column < ncols
+
+
+def get_number_of_adjacent_live_cells(
+        grid: Grid, row_idx: int, col_idx: int
+) -> int:
+    """
+    returns the number of alive cells that are adjacent to a specific cell
+    :param grid: array in which the number of alive neighbours of the cells
+                 should be checked
+    :param row & col_idx: indicate the position of the cell in the array for
+                          which we want to get the number of alive neighbours
+    :return: number of alive cells that are adjacent to the cell indicated by
+             row_idx & column_idx
+    """
+    # Size of given 2d array
+    nrows = len(grid)
+    ncols = len(grid[0])
+
+    # Initialising a vector array
+    # where adjacent live cells will be stored
+    number_live_cells = 0
+
+    # checking all (valid) adjacent positions for alive cells
+    # if a neighbouring cell is alive, the count of alive cells increases by 1
+    if is_valid_pos(row_idx - 1, col_idx - 1, nrows, ncols):
+        if grid[row_idx - 1][col_idx - 1] == 1:
+            number_live_cells += 1
+    if is_valid_pos(row_idx - 1, col_idx, nrows, ncols):
+        if grid[row_idx - 1][col_idx] == 1:
+            number_live_cells += 1
+    if is_valid_pos(row_idx - 1, col_idx + 1, nrows, ncols):
+        if grid[row_idx - 1][col_idx + 1] == 1:
+            number_live_cells += 1
+    if is_valid_pos(row_idx, col_idx - 1, nrows, ncols):
+        if grid[row_idx][col_idx - 1] == 1:
+            number_live_cells += 1
+    if is_valid_pos(row_idx, col_idx + 1, nrows, ncols):
+        if grid[row_idx][col_idx + 1] == 1:
+            number_live_cells += 1
+    if is_valid_pos(row_idx + 1, col_idx - 1, nrows, ncols):
+        if grid[row_idx + 1][col_idx - 1] == 1:
+            number_live_cells += 1
+    if is_valid_pos(row_idx + 1, col_idx, nrows, ncols):
+        if grid[row_idx + 1][col_idx] == 1:
+            number_live_cells += 1
+    if is_valid_pos(row_idx + 1, col_idx + 1, nrows, ncols):
+        if grid[row_idx + 1][col_idx + 1] == 1:
+            number_live_cells += 1
+
+    # return number of alive cells around a specific cell
+    return number_live_cells
