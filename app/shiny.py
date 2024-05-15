@@ -111,10 +111,23 @@ async def update_board(
 
 
 # UI ----
-
+app_ui = ui.page_bootstrap(
+    ui.tags.head(
+        ui.tags.link(rel="stylesheet", href="/ui.css"),
+    ),
+    # header
+    ui.tags.div(
+        {"class": "coloured-background"},
+        # heading
+        ui.tags.p({"class": "heading"}, "Evolving Grids"),
+        # subheading
+        ui.tags.p({"class": "small-text"}, "A Shiny App by Sarah Lenz"),
+    )
+)
 
 
 # Server ----
+def server(shiny_input: Inputs, output: Outputs, session: Session):
 
 
 
