@@ -1,9 +1,13 @@
+import asyncio
+from pathlib import Path
 from app.grid_functions import Grid
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui
 
 from app.shiny_extensions import (session_is_active,
                                  unstyled_input_action_button)
 
+
+# functions ----
 def create_grid_ui(grid: Grid) -> Tag:
     """
     creates the grid for actually playing the Game of Life, including all the
@@ -104,3 +108,16 @@ async def update_board(
         # then the function sleeps for 1/(2*n) seconds
         # noinspection PyProtectedMember
         await asyncio.sleep(1 / (2 * shiny_input.speed_slider._value))
+
+
+# UI ----
+
+
+
+# Server ----
+
+
+
+# Combine into a shiny app ----
+static_files_dir = Path(__file__).parent / "static"
+app = App(app_ui, server, static_assets=static_files_dir)
