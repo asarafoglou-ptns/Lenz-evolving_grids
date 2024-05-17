@@ -122,7 +122,35 @@ app_ui = ui.page_bootstrap(
         ui.tags.p({"class": "heading"}, "Evolving Grids"),
         # subheading
         ui.tags.p({"class": "small-text"}, "A Shiny App by Sarah Lenz"),
-    )
+    ),
+    ui.tags.div(
+        {"class": "padded"},
+        # Description of the Game
+        ui.tags.div(
+            ui.tags.p({"class": "bold"},
+                      "What is Evolving Grids?"),
+            ui.tags.p(
+                "Evolving Grids is a Python app that allows you to play ",
+                ui.tags.b("Conway's Game of Life"),
+                " on your laptop. Conway's Game of Life is a simple "
+                "simulation that doesn't require active participation. Instead, "
+                "you set up an initial configuration of 'alive' and 'dead' cells on "
+                "a grid and then observe how they evolve over generations based on "
+                "a set of rules.",
+                ui.tags.br(),
+                ui.tags.br(),
+                "Those rules are:",
+                ui.tags.br(),
+                "1. From one generation to the next, alive cells with 2-3 alive "
+                "neighbours stay alive.",
+                ui.tags.br(),
+                "2. Alive cells with more than 3 alive neighbours die due to overpopulation.",
+                ui.tags.br(),
+                "3. Dead cells with exactly 3 neighbours come to live through reproduction.",
+                ui.tags.br()
+            ),
+        ),
+    ),
 )
 
 
