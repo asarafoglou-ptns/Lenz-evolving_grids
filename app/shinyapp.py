@@ -153,8 +153,13 @@ app_ui = ui.page_bootstrap(
                 "3. Dead cells with exactly 3 neighbours come to live through reproduction.",
                 ui.tags.br()
             ),
-        # grid
-        ui.output_ui("grid"),
+            # control panel
+            ui.tags.div(
+            {"class": "control-panel padded"},
+            ui.tags.p({"class": "bold"}, "Controls"),
+            # grid
+            ui.output_ui("grid"),
+            ),
         ),
     ),
 )
