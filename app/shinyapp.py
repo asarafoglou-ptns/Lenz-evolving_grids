@@ -1,8 +1,12 @@
 import asyncio
+
 from pathlib import Path
-from app.grid_functions import Grid
+from typing import List
+from htmltools import Tag
+
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui
 
+from app.grid_functions import Grid
 from app.shiny_extensions import (session_is_active,
                                  unstyled_input_action_button)
 
@@ -149,6 +153,8 @@ app_ui = ui.page_bootstrap(
                 "3. Dead cells with exactly 3 neighbours come to live through reproduction.",
                 ui.tags.br()
             ),
+        # grid
+        ui.output_ui("grid"),
         ),
     ),
 )
@@ -156,6 +162,30 @@ app_ui = ui.page_bootstrap(
 
 # Server ----
 def server(shiny_input: Inputs, output: Outputs, session: Session):
+    # variables and reactive values ---
+    # here, I create a grid with reactive values
+    # noinspection PyProtectedMember
+    dynamic_grid = reactive.Value(
+        create_grid(shiny_input.grid_rows._value, shiny_input.grid_cols._value)
+    )
+
+    # here, I create a dynamic list of all the buttons in the dynamic_grid that
+    # I can use to register clicks on all buttons. It's a reactive value because
+    # the size of the grid can be adjusted, so the buttons in the grid change.
+    buttons = reactive.Value(create_btn_id_list(dynamic_grid))
+
+    # grid ---
+    # show alive cells
+    @output
+    @render.ui
+    def grid():
+        """
+        renders the grid (after values have been toggled by clicking on them)
+        :return: the adapted/updated grid
+        """
+        return create_grid_ui(dynamic_grid())
+
+
 
 
 
