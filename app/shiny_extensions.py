@@ -1,8 +1,10 @@
 import shiny
+
 from htmltools import TagAttrValue, TagChild, tags
 from typing import List, Callable, Any, TypeVar
 from starlette.websockets import WebSocketState
 from shiny import Session, Inputs, reactive
+
 # noinspection PyProtectedMember
 from shiny._namespaces import resolve_id
 from shiny._connection import StarletteConnection

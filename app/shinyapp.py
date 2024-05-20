@@ -153,12 +153,27 @@ app_ui = ui.page_bootstrap(
                 "3. Dead cells with exactly 3 neighbours come to live through reproduction.",
                 ui.tags.br()
             ),
-            # control panel
+            # div with control panel and grid
             ui.tags.div(
-            {"class": "control-panel padded"},
-            ui.tags.p({"class": "bold"}, "Controls"),
-            # grid
-            ui.output_ui("grid"),
+                {"class": "side-by-side"},
+                # control panel
+                ui.tags.div(
+                    {"class": "control-panel padded"},
+                    ui.tags.p({"class": "bold"}, "Controls"),
+                    # div with start/pause and reset button
+                    ui.tags.div(
+                        {"class": "action-buttons"},
+                        # start/pause button
+                        ui.input_action_button(
+                            "toggle_button",
+                            ui.output_ui("start_pause_button_text")
+                        ),
+                        # that calls a function on the server (the button is
+                        # displayed based on that function)
+                    ),
+                # grid
+                ui.output_ui("grid"),
+                ),
             ),
         ),
     ),
@@ -190,6 +205,28 @@ def server(shiny_input: Inputs, output: Outputs, session: Session):
         """
         return create_grid_ui(dynamic_grid())
 
+    # start/pause button ---
+    @reactive.Effect
+    @reactive.event(shiny_input.toggle_button)
+    def on_button_click():
+        """
+        whenever the button is clicked, the value of is_simulation_running is
+        changed from True to False or the other way around, depending on the
+        current value.
+        """
+        is_simulation_running.set(not is_simulation_running.get())
+
+    @output
+    @render.ui()
+    def start_pause_button_text():
+        """
+        Displays the inscription of the button reactively, depending on the
+        value of is_simulation_running. When is_simulation_running is 'True',
+        the button will read 'Pause', if is_simulation_running is 'False',
+        it will read 'Start'.
+        :return: the button with its changed inscription
+        """
+        return ui.tags.span("Pause" if is_simulation_running() else "Start")
 
 
 
