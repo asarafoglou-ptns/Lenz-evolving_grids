@@ -6,7 +6,7 @@ from htmltools import Tag
 
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui
 
-from app.grid_functions import Grid
+from app.grid_functions import Grid, create_grid, toggle_at_position
 from app.shiny_extensions import (session_is_active,
                                  unstyled_input_action_button,
                                   register_dynamic_events)
@@ -154,47 +154,58 @@ app_ui = ui.page_bootstrap(
                 "3. Dead cells with exactly 3 neighbours come to live through reproduction.",
                 ui.tags.br()
             ),
-            # div with control panel and grid
+        ),
+        # div with control panel and grid
+        ui.tags.div(
+            {"class": "side-by-side"},
+            # control panel
             ui.tags.div(
-                {"class": "side-by-side"},
-                # control panel
+                {"class": "control-panel padded"},
+                ui.tags.p({"class": "bold"}, "Controls"),
+                # div with start/pause and reset button
                 ui.tags.div(
-                    {"class": "control-panel padded"},
-                    ui.tags.p({"class": "bold"}, "Controls"),
-                    # div with start/pause and reset button
-                    ui.tags.div(
-                        {"class": "action-buttons"},
-                        # start/pause button
-                        ui.input_action_button(
-                            "toggle_button",
-                            ui.output_ui("start_pause_button_text")
-                        ),
-                        # that calls a function on the server (the button is
-                        # displayed based on that function)
-                        # reset button
-                        ui.input_action_button("reset_button", "Reset"),
+                    {"class": "action-buttons"},
+                    # start/pause button
+                    ui.input_action_button(
+                        "toggle_button",
+                        ui.output_ui("start_pause_button_text")
                     ),
-                    # div with controls for adjusting the size of the grid
-                    ui.tags.div(
-                        ui.tags.p({"class": "bold"}, "Grid size"),
-                        ui.input_numeric(
-                            "grid_rows", "Rows:", min=5, max=35, value=15
-                        ),
-                        ui.input_numeric(
-                            "grid_cols", "Columns:", min=5, max=50,
-                            value=15
-                        ),
-                        ui.input_action_button("submit_grid_size",
-                                               "Set grid size"),
+                    # that calls a function on the server (the button is
+                    # displayed based on that function)
+                    # reset button
+                    ui.input_action_button("reset_button", "Reset"),
+                ),
+                # div with slider to adjust simulation speed
+                ui.tags.div(
+                    {"class": "bold"},
+                    ui.input_slider(
+                        "speed_slider",
+                        "Simulation speed",
+                        1,
+                        10,
+                        1,
+                        ticks=False,
                     ),
                 ),
-                # grid
-                ui.output_ui("grid"),
+                # div with controls for adjusting the size of the grid
+                ui.tags.div(
+                    ui.tags.p({"class": "bold"}, "Grid size"),
+                    ui.input_numeric(
+                        "grid_rows", "Rows:", min=5, max=35, value=15
+                    ),
+                    ui.input_numeric(
+                        "grid_cols", "Columns:", min=5, max=50,
+                        value=15
+                    ),
+                    ui.input_action_button("submit_grid_size",
+                                           "Set grid size"),
                 ),
             ),
+            # grid
+            ui.output_ui("grid"),
         ),
-    )
-
+    ),
+)
 
 
 # Server ----
@@ -297,6 +308,20 @@ def server(shiny_input: Inputs, output: Outputs, session: Session):
         # update dynamic list of buttons in the grid
         buttons.set(create_btn_id_list(dynamic_grid))
 
+    # reset grid
+    @reactive.Effect
+    @reactive.event(shiny_input.reset_button)
+    def reset_grid():
+        """
+        this function resets the grid to its original blank state
+        :return: None
+        """
+        dynamic_grid.set(
+            create_grid(
+                shiny_input.grid_rows.get(), shiny_input.grid_cols.get()
+            )
+        )
+        is_simulation_running.set(False)
 
     # start/pause button ---
     @reactive.Effect
@@ -321,22 +346,7 @@ def server(shiny_input: Inputs, output: Outputs, session: Session):
         """
         return ui.tags.span("Pause" if is_simulation_running() else "Start")
 
-    # reset grid
-    @reactive.Effect
-    @reactive.event(shiny_input.reset_button)
-    def reset_grid():
-        """
-        this function resets the grid to its original blank state
-        :return: None
-        """
-        dynamic_grid.set(
-            create_grid(
-                shiny_input.grid_rows.get(), shiny_input.grid_cols.get()
-            )
-        )
-        is_simulation_running.set(False)
 
-
-# Combine into a shiny app ----
+# Combine into a shiny app ---
 static_files_dir = Path(__file__).parent / "static"
 app = App(app_ui, server, static_assets=static_files_dir)
