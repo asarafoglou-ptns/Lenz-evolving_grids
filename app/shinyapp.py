@@ -8,7 +8,8 @@ from shiny import App, Inputs, Outputs, Session, reactive, render, ui
 
 from app.grid_functions import Grid
 from app.shiny_extensions import (session_is_active,
-                                 unstyled_input_action_button)
+                                 unstyled_input_action_button,
+                                  register_dynamic_events)
 
 
 # functions ----
@@ -197,6 +198,31 @@ def server(shiny_input: Inputs, output: Outputs, session: Session):
     buttons = reactive.Value(create_btn_id_list(dynamic_grid))
 
     # grid ---
+    # register which button has been clicked
+    @register_dynamic_events(shiny_input, buttons)
+    def button_clicked(button_id: str, _: int):
+        """
+        registers which button in the grid is clicked and toggles its value
+        :param button_id: id of a button with the format btn_row_col
+        :param _: the index of the event in the event_list
+        """
+
+        # the format of the button_id is the following btn_row_col
+        # therefore we split this id at "btn_", and select the first index,
+        # which is only row_col. If we split that again at "_" we get the
+        # row_idx and the col_idx as string
+        [row_idx, col_idx] = button_id.split("btn_")[1].split("_")
+        # convert said row_idx and col_idx to number to be able to use it as
+        # index
+        row_idx = int(row_idx)
+        col_idx = int(col_idx)
+
+        # toggle the value of the grid cell at the determined position. If the
+        # value was 0 before, we put in a 1, otherwise we put a 0
+        dynamic_grid.set(
+            toggle_at_position(dynamic_grid.get(), row_idx, col_idx)
+        )
+
     # show alive cells
     @output
     @render.ui
