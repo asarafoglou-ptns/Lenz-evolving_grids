@@ -191,11 +191,21 @@ def server(shiny_input: Inputs, output: Outputs, session: Session):
     dynamic_grid = reactive.Value(
         create_grid(shiny_input.grid_rows._value, shiny_input.grid_cols._value)
     )
+    # here, I create a reactive value for the button to check if the simulation
+    # is currently running
+    is_simulation_running = reactive.Value(False)
 
     # here, I create a dynamic list of all the buttons in the dynamic_grid that
     # I can use to register clicks on all buttons. It's a reactive value because
     # the size of the grid can be adjusted, so the buttons in the grid change.
     buttons = reactive.Value(create_btn_id_list(dynamic_grid))
+
+    # periodically check if the simulation is running and if yes, update the
+    # board. unfortunately this is the only way to do that in shiny, because
+    # async timers/threading is not supported
+    asyncio.create_task(
+        update_board(session, shiny_input, is_simulation_running, dynamic_grid)
+    )
 
     # grid ---
     # register which button has been clicked
