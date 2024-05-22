@@ -170,6 +170,8 @@ app_ui = ui.page_bootstrap(
                         ),
                         # that calls a function on the server (the button is
                         # displayed based on that function)
+                        # reset button
+                        ui.input_action_button("reset_button", "Reset"),
                     ),
                 # grid
                 ui.output_ui("grid"),
@@ -228,7 +230,20 @@ def server(shiny_input: Inputs, output: Outputs, session: Session):
         """
         return ui.tags.span("Pause" if is_simulation_running() else "Start")
 
-
+    # reset grid
+    @reactive.Effect
+    @reactive.event(shiny_input.reset_button)
+    def reset_grid():
+        """
+        this function resets the grid to its original blank state
+        :return: None
+        """
+        dynamic_grid.set(
+            create_grid(
+                shiny_input.grid_rows.get(), shiny_input.grid_cols.get()
+            )
+        )
+        is_simulation_running.set(False)
 
 
 # Combine into a shiny app ----
