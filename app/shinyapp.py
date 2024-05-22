@@ -174,13 +174,27 @@ app_ui = ui.page_bootstrap(
                         # reset button
                         ui.input_action_button("reset_button", "Reset"),
                     ),
+                    # div with controls for adjusting the size of the grid
+                    ui.tags.div(
+                        ui.tags.p({"class": "bold"}, "Grid size"),
+                        ui.input_numeric(
+                            "grid_rows", "Rows:", min=5, max=35, value=15
+                        ),
+                        ui.input_numeric(
+                            "grid_cols", "Columns:", min=5, max=50,
+                            value=15
+                        ),
+                        ui.input_action_button("submit_grid_size",
+                                               "Set grid size"),
+                    ),
+                ),
                 # grid
                 ui.output_ui("grid"),
                 ),
             ),
         ),
-    ),
-)
+    )
+
 
 
 # Server ----
@@ -242,6 +256,47 @@ def server(shiny_input: Inputs, output: Outputs, session: Session):
         :return: the adapted/updated grid
         """
         return create_grid_ui(dynamic_grid())
+
+    # adjust grid size
+    @reactive.Effect
+    @reactive.event(shiny_input.submit_grid_size)
+    def set_grid_size():
+        """
+        sets grid size to the dimensions specified in the corresponding ui.input_numeric fields and stops
+        ongoing simulations
+        :return: None
+        """
+        # get the value entered for the number of rows
+        grid_rows = shiny_input.grid_rows.get()
+        # notification if the value entered for grid_rows is not a numeric value
+        if not isinstance(grid_rows, int):
+            ui.notification_show("Number of rows has to be a numeric value.")
+            return
+        # notification if the value entered for grid_rows is outside the
+        # possible range
+        if not 5 <= grid_rows <= 35:
+            ui.notification_show("Number of rows has to be between 5 and 35.")
+            return
+        # get the value entered for the number of columns
+        grid_cols = shiny_input.grid_cols.get()
+        # notification if the value entered for grid_cols is not a numeric value
+        if not isinstance(grid_cols, int):
+            ui.notification_show("Number of columns has to be a numeric value.")
+            return
+        # notification if the value entered for grid_cols is outside the
+        # possible range
+        if not 5 <= grid_cols <= 50:
+            ui.notification_show(
+                "Number of columns has to be between 5 and 50."
+            )
+            return
+        # stop a possibly ongoing simulation when a new grid size is set
+        is_simulation_running.set(False)
+        # set the new grid size
+        dynamic_grid.set(create_grid(grid_rows, grid_cols))
+        # update dynamic list of buttons in the grid
+        buttons.set(create_btn_id_list(dynamic_grid))
+
 
     # start/pause button ---
     @reactive.Effect
