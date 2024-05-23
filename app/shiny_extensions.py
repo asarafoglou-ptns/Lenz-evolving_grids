@@ -7,9 +7,8 @@ from shiny import Session, Inputs, reactive
 
 # noinspection PyProtectedMember
 from shiny._namespaces import resolve_id
+# noinspection PyProtectedMember
 from shiny._connection import StarletteConnection
-
-
 
 
 def unstyled_input_action_button(
@@ -19,7 +18,7 @@ def unstyled_input_action_button(
         **kwargs: TagAttrValue,
 ):
     """
-    Because shiny doesn't allow this, I had to find a hacky way to set class-names
+    Because shiny doesn't allow this, I had to find a way to set class-names
     on buttons. This function mimics the way shiny input_action_buttons are
     created, BUT still allows you to attach custom classes to it.
     ! Make sure that you pass the "action-button" to it, otherwise shiny will
@@ -41,7 +40,7 @@ def unstyled_input_action_button(
 def session_is_active(session: Session) -> bool:
     """
     This is a hack to check if the session is still active.
-    Because shiny doesn't expose a way to check this, we have to use
+    Because shiny doesn't provide a way to check this, we have to use
     a private attribute of the session object.
     :param session: The shiny session
     :return: True if the session is still active, False otherwise
@@ -58,7 +57,7 @@ def register_dynamic_events(
     """
     Shiny does not allow the registration of events to dynamic html (for example
     a list of buttons which can get longer and shorter). Therefore, I had to
-    create a workaround which allows to do that
+    create a workaround which allows to do that.
     :param shiny_input: The shiny input of the server
     :param event_list: A list of events that should be subscribed to (can be a
                        reactive value with a str list if the events that should
@@ -114,7 +113,7 @@ def on_value_change(
         val: reactive.Value[T], value_changed: Callable[[T], Any]
 ) -> None:
     """
-    Register an onChange callback which gets called every time the reactive
+    registers an onChange callback which gets called every time the reactive
     value changes
     :param val: The reactive value that should be monitored
     :param value_changed: The callback which should be executed

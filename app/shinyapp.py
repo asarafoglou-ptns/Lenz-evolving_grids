@@ -15,8 +15,8 @@ from app.shiny_extensions import (session_is_active,
 # functions ----
 def create_grid_ui(grid: Grid) -> Tag:
     """
-    creates the grid for actually playing the Game of Life, including all the
-    buttons
+    creates the grid for playing the Game of Life, including all the buttons, which
+    can later be displayed in the UI
     :param grid: grid to turn into the game board
     :return: grid in a grid container
     """
@@ -63,7 +63,7 @@ def create_grid_ui(grid: Grid) -> Tag:
 
 def create_btn_id_list(dynamic_grid: reactive.Value[Grid]) -> List[str]:
     """
-    Creates a list with all button_ids in the dynamic_grid.
+    Creates a list with all button_ids in a dynamic_grid
     :param dynamic_grid: The reactive grid containing button information.
     :return: List of button IDs.
     """
@@ -89,12 +89,13 @@ async def update_board(
     # function is active as long as the session is active (as long as the
     # website is open)
     while session_is_active(session):
-        # watches if the simulation is running (every 0.1 seconds)
+        # watches if the simulation is running (checks every 0.1 seconds)
         # noinspection PyProtectedMember
         if not is_simulation_running._value:
             await asyncio.sleep(0.1)
             continue
-        # if the simulation is running [is_simulation_running == TRUE], the grid is updated
+        # if the simulation is running [is_simulation_running == TRUE],
+        # the grid is updated
         # noinspection PyProtectedMember
         old_generation = dynamic_grid._value
         new_generation = create_new_generation(old_generation)

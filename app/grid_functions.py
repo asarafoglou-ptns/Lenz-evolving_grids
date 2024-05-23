@@ -1,7 +1,7 @@
 from typing import List
 
-Grid = List[List[int]]
 
+Grid = List[List[int]]
 
 def create_grid(nrow: int, ncol: int) -> Grid:
     """
