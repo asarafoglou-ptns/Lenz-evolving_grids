@@ -44,6 +44,13 @@
     padding-bottom: 10px;
 }
 
+/* Default styles for action buttons */
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 15px;
+}
+
 
 /* utilities -------------------------------------------- */
 /* styling of heading */
@@ -83,6 +90,11 @@
     color: #344E5A;
 }
 
+/* Default styles for the side-by-side layout */
+.side-by-side {
+    display: flex;
+}
+
 
 /* modifying shiny ------------------------------------------------- */
 /* shiny input containers should never just take up the whole width. This makes them use only the space they have */
@@ -97,4 +109,38 @@
  */
 .bold .control-label {
     font-weight: bold;
+}
+
+
+/* Media query for screens with a maximum width of 768px ---------------------- */
+@media (max-width: 900px) {
+    /* Change to a stacked layout */
+    .side-by-side {
+        flex-direction: column;
+    }
+
+    /* Change width of control panel */
+    .control-panel {
+        width: 100%;
+        display: flex;
+        padding-right: 10px;
+        padding-left: 10px;
+        /* enables line breaks for flex */
+        flex-wrap: wrap;
+    }
+
+    /* Every child of the control-panel now takes up 100% of the control panel width */
+    .control-panel > * {
+        min-width: 100%;
+    }
+
+    /* Prevents flexbox from spacing the two buttons apart */
+    .action-buttons {
+        display: block;
+    }
+
+    /* adds a margin to buttons inside of the action buttons container */
+    .action-buttons > button {
+        margin-right: 15px;
+    }
 }
