@@ -1,4 +1,37 @@
 /* grid ---------------------------------------- */
+/* styling of the container for the grid */
+.grid-container {
+    display: inline-block;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+}
+
+/* styling of the rows in the grid */
+.grid-row {
+    display: flex;
+    height: 21px
+}
+
+/* styling of the columns in the grid */
+.grid-column {
+    border: 1px solid #737272;
+    width: 21px
+}
+
+/* styling of the buttons in the grid */
+.grid-button {
+    border: none;
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    padding-top: 18px;
+}
+
+/* styling/colouring of alive cells */
+.live-cell {
+    background: #ffb140;
+}
 
 
 /* control panel --------------------------------------------- */
@@ -51,4 +84,17 @@
 }
 
 
-/* control panel --------------------------------------------- */
+/* modifying shiny ------------------------------------------------- */
+/* shiny input containers should never just take up the whole width. This makes them use only the space they have */
+.shiny-input-container {
+    width: unset !important;
+}
+
+/*
+ * Because we do not have direct access to the inner elements of shiny components we have to use a workaround
+ * In this case every time we attach a "bold" class to a shiny custom element and the element has some kind of label
+ * inside of it, it make said label bold
+ */
+.bold .control-label {
+    font-weight: bold;
+}
