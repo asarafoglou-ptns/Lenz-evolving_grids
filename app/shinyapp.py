@@ -156,6 +156,25 @@ app_ui = ui.page_bootstrap(
                 ui.tags.br()
             ),
         ),
+        # Instructions for how to play the game
+        ui.tags.div(
+            ui.tags.p({"class": "bold"}, "How to play"),
+            ui.tags.p(
+                "To play the game, you have to ",
+                ui.tags.b("bring cells alive"),
+                " by clicking on the grid. Alive cells are marked in orange. By "
+                "clicking on the same cell a second time, you kill the cell. ",
+                ui.tags.b("Click 'Start'"),
+                "to start the simulation and 'Pause' to halt it. You can ",
+                ui.tags.b("adjust the speed"),
+                " of the simulation using the slider in the control panel "
+                "(please note: the larger the grid, the slower the"
+                " possible max speed). You can also ",
+                ui.tags.b("adjust the size of the grid"),
+                ". Clicking on 'Reset' returns the grid to its initial "
+                "blank state, but keeps your settings for the size of the grid."
+            ),
+        ),
         # div with control panel and grid
         ui.tags.div(
             {"class": "side-by-side"},
