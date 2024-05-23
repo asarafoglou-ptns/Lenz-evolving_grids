@@ -2,6 +2,7 @@ import shiny
 from htmltools import TagAttrValue, TagChild, tags
 # noinspection PyProtectedMember
 from shiny._namespaces import resolve_id
+from shiny import Session
 
 
 def unstyled_input_action_button(
@@ -28,4 +29,18 @@ def unstyled_input_action_button(
         **kwargs,
     )
 
+
+# noinspection PyProtectedMember
+def session_is_active(session: Session) -> bool:
+    """
+    This is a hack to check if the session is still active.
+    Because shiny doesn't expose a way to check this, we have to use
+    a private attribute of the session object.
+    :param session: The shiny session
+    :return: True if the session is still active, False otherwise
+    """
+    return (
+            cast(StarletteConnection, session._conn).conn.client_state
+            == WebSocketState.CONNECTED
+    )
 

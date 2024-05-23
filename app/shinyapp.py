@@ -1,8 +1,12 @@
 import asyncio
+
 from pathlib import Path
-from app.grid_functions import Grid
+from typing import List
+from htmltools import Tag
+
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui
 
+from app.grid_functions import Grid
 from app.shiny_extensions import (session_is_active,
                                  unstyled_input_action_button)
 
@@ -122,12 +126,71 @@ app_ui = ui.page_bootstrap(
         ui.tags.p({"class": "heading"}, "Evolving Grids"),
         # subheading
         ui.tags.p({"class": "small-text"}, "A Shiny App by Sarah Lenz"),
-    )
+    ),
+    ui.tags.div(
+        {"class": "padded"},
+        # Description of the Game
+        ui.tags.div(
+            ui.tags.p({"class": "bold"},
+                      "What is Evolving Grids?"),
+            ui.tags.p(
+                "Evolving Grids is a Python app that allows you to play ",
+                ui.tags.b("Conway's Game of Life"),
+                " on your laptop. Conway's Game of Life is a simple "
+                "simulation that doesn't require active participation. Instead, "
+                "you set up an initial configuration of 'alive' and 'dead' cells on "
+                "a grid and then observe how they evolve over generations based on "
+                "a set of rules.",
+                ui.tags.br(),
+                ui.tags.br(),
+                "Those rules are:",
+                ui.tags.br(),
+                "1. From one generation to the next, alive cells with 2-3 alive "
+                "neighbours stay alive.",
+                ui.tags.br(),
+                "2. Alive cells with more than 3 alive neighbours die due to overpopulation.",
+                ui.tags.br(),
+                "3. Dead cells with exactly 3 neighbours come to live through reproduction.",
+                ui.tags.br()
+            ),
+            # control panel
+            ui.tags.div(
+            {"class": "control-panel padded"},
+            ui.tags.p({"class": "bold"}, "Controls"),
+            # grid
+            ui.output_ui("grid"),
+            ),
+        ),
+    ),
 )
 
 
 # Server ----
 def server(shiny_input: Inputs, output: Outputs, session: Session):
+    # variables and reactive values ---
+    # here, I create a grid with reactive values
+    # noinspection PyProtectedMember
+    dynamic_grid = reactive.Value(
+        create_grid(shiny_input.grid_rows._value, shiny_input.grid_cols._value)
+    )
+
+    # here, I create a dynamic list of all the buttons in the dynamic_grid that
+    # I can use to register clicks on all buttons. It's a reactive value because
+    # the size of the grid can be adjusted, so the buttons in the grid change.
+    buttons = reactive.Value(create_btn_id_list(dynamic_grid))
+
+    # grid ---
+    # show alive cells
+    @output
+    @render.ui
+    def grid():
+        """
+        renders the grid (after values have been toggled by clicking on them)
+        :return: the adapted/updated grid
+        """
+        return create_grid_ui(dynamic_grid())
+
+
 
 
 

@@ -1,6 +1,17 @@
 /* grid ---------------------------------------- */
 
 
+/* control panel --------------------------------------------- */
+/* Default styles for the control panel */
+.control-panel {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border: solid #dcdcdc;
+    width: 20%;
+    padding-bottom: 10px;
+}
+
+
 /* utilities -------------------------------------------- */
 /* styling of heading */
 .heading {
@@ -24,6 +35,19 @@
 /* coloured background */
 .coloured-background {
     background-color: #344c57;
+}
+
+/* padding on all sides of an element */
+.padded {
+    padding: 10px;
+}
+
+/* font-type bold */
+.bold {
+    font-weight: bolder;
+    font-family: "Courier New";
+    font-size: 20px;
+    color: #344E5A;
 }
 
 
