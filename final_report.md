@@ -84,11 +84,7 @@ As explained above, the __game grid__ is located at the bottom right of the page
 ### 4. How do install and use the app
 In the following, I will illustrate the steps you need to take to download and run the app on your laptop. Before you follow the steps outlined below, please make sure that you have Python (https://www.python.org/downloads/) installed on your computer.
 
-__1__ Go to my GitHub repository: (https://github.com/asarafoglou-ptns/Lenz-evolving_grids)
-
-
-__2__ Download the whole repository (can be done by going to the green Code button > Download ZIP), see the screenshot here:
-TODO
+__1__ Install the package in your Python IDE using `pip install git+https://github.com/asarafoglou-ptns/Lenz-evolving_grids.git`
 
 Now you will have my directory on your computer. Before we proceed, here is an explanation of the contents of the repository:
 
@@ -104,7 +100,11 @@ There is also one folder called `app`. This folder contains the code of the app 
   * `run.py`  setup for running an ASGI (Asynchronous Server Gateway Interface) application using the Uvicorn server
   * `shiny_extensions.py` extensions to the standard Shiny for Python to make the app work
 
-__3__ Install all python libraries according to `requirements.txt` since that also contains the versions you need.
+__2__ Import the package into your IDE using `import evolving_grids`
 
-__4__ Now feel free to do whatever you want with the code - change the styling of the app or add more features. Enjoy!
+__3__ Locate the imported evolving_grids package within your IDE navigate to the `app` folder within the package (cd path\to\evolving_grids\app)
+
+__4__ Start the app by executing the `run.py` module using `python -m evolving_grids.app.run` 
+
+__5__ Now, you can the app! Enjoy! You can also use my code and make changes to the app, like styling it in a different way or adding more features to it.
 
