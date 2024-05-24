@@ -5,3 +5,11 @@ htmltools==0.5.1
 uvicorn==0.29.0
 starlette==0.37.2
 
+# for tests
+pytest==8.2.0
+coverage==7.5.0
+
+# for packaging
+# (are those really requirements for people who want to run the app or do only I need this?)
+prompt_toolkit==3.0.36
+ipython==7.23.1
