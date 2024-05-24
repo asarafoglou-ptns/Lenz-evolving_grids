@@ -7,12 +7,12 @@ from htmltools import Tag
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui
 
 from app.grid_functions import Grid, create_grid, toggle_at_position
-from app.shiny_extensions import (session_is_active,
-                                 unstyled_input_action_button,
-                                  register_dynamic_events)
+from app.logic_functions import create_new_generation
+from app.shiny_extensions import (register_dynamic_events,
+                                           session_is_active,
+                                           unstyled_input_action_button)
 
 
-# functions ----
 def create_grid_ui(grid: Grid) -> Tag:
     """
     creates the grid for playing the Game of Life, including all the buttons, which
@@ -89,13 +89,12 @@ async def update_board(
     # function is active as long as the session is active (as long as the
     # website is open)
     while session_is_active(session):
-        # watches if the simulation is running (checks every 0.1 seconds)
+        # watches if the simulation is running (every 0.1 seconds)
         # noinspection PyProtectedMember
         if not is_simulation_running._value:
             await asyncio.sleep(0.1)
             continue
-        # if the simulation is running [is_simulation_running == TRUE],
-        # the grid is updated
+        # if the simulation is running [is_simulation_running == TRUE], the grid is updated
         # noinspection PyProtectedMember
         old_generation = dynamic_grid._value
         new_generation = create_new_generation(old_generation)
