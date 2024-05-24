@@ -58,7 +58,7 @@
     font-family: "Courier New";
     font-weight: bold;
     font-size: 30px;
-    color: #ffffff;
+    color: #344E5A;
     padding-top: 10px;
     padding-left: 10px;
     padding-right: 10px;
@@ -74,7 +74,7 @@
 
 /* coloured background */
 .coloured-background {
-    background-color: #344c57;
+    background-color: #E0E9ED;
 }
 
 /* padding on all sides of an element */

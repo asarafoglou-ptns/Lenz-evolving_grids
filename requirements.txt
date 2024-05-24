@@ -1,4 +1,7 @@
+# for basic functionalities of app
 typing==3.10.0.0
 shiny==0.9.0
 htmltools==0.5.1
 uvicorn==0.29.0
+starlette==0.37.2
+
