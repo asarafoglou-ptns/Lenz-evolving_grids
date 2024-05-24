@@ -57,31 +57,8 @@ The following screenshot shows the entire app (how it looks when you run and ope
 ![full_page.png](app\static\full_page.png)
 
 
-
-##### The Controls
-Let's take a closer look at the controls. At the top of the panel, there is a __start and a reset button__. Clicking on 'start' starts the simulation. While the simulation is running, the inscription of the 'start' button switches to 'pause'. Clicking on 'pause' halts the simulation. It is now possible to make adjustments to the configuration of alive and dead cells. Clicking 'start' again resumes the simulation, while pressing 'reset' resets the grid to its original blank state.
-
-![controls_buttons.png](app\static\controls_buttons.png)
-
-
-Below the 'start/pause' and 'reset' buttons, there is a __slider__ with which you can __adjust the speed__ of the simulation. '1' indicates the lowest possible speed, '10' the highest.
-
-![controls_speed.png](app\static\controls_speed.png)
-
-
-At the bottom of the control panel, there are two input fields in which you can __specify the number of rows and columns you want your grid to have__. The maximum possible number of rows is X and the maximum possible number of columns is Y. To set the grid size, press 'set grid size'.
-
-![controls_size.png](app\static\controls_size.png)
-
-
-##### The Grid
-As explained above, the __game grid__ is located at the bottom right of the page. To play Conway's Game of Life, you need to bring some of the cells to life by clicking on them. Alive cells are marked in orange, dead cells are white.
-
-![alive_grid.png](app\static\alive_grid.png)
-
-
-
 ### 4. How do install and use the app
+#### Installing and running the app
 In the following, I will illustrate the steps you need to take to download and run the app on your laptop. Before you follow the steps outlined below, please make sure that you have Python (https://www.python.org/downloads/) installed on your computer.
 
 __1__ Install the package in your Python IDE using `pip install git+https://github.com/asarafoglou-ptns/Lenz-evolving_grids.git`
@@ -102,9 +79,32 @@ There is also one folder called `app`. This folder contains the code of the app 
 
 __2__ Import the package into your IDE using `import evolving_grids`
 
+TODO try running command from 4. from root directory and if it works, remove:
 __3__ Locate the imported evolving_grids package within your IDE navigate to the `app` folder within the package (cd path\to\evolving_grids\app)
 
-__4__ Start the app by executing the `run.py` module using `python -m evolving_grids.app.run` 
+__4__ Start the app by executing the `run.py` module using `python -m evolving_grids.app.run`
 
 __5__ Now, you can the app! Enjoy! You can also use my code and make changes to the app, like styling it in a different way or adding more features to it.
 
+#### How to use the app
+
+##### The Grid
+As explained above, the __game grid__ is located at the bottom right of the page. To play Conway's Game of Life, you need to bring some of the cells to life by clicking on them. Alive cells are marked in orange, dead cells are white.
+
+![alive_grid.png](app\static\alive_grid.png)
+
+
+##### The Controls
+At the top of the control panel, there is a __start and a reset button__. Clicking on 'start' starts the simulation. While the simulation is running, the inscription of the 'start' button switches to 'pause'. Clicking on 'pause' halts the simulation. It is now possible to make adjustments to the configuration of alive and dead cells. Clicking 'start' again resumes the simulation, while pressing 'reset' resets the grid to its original blank state.
+
+![controls_buttons.png](app\static\controls_buttons.png)
+
+
+Below the 'start/pause' and 'reset' buttons, there is a __slider__ with which the __speed of the simulation__ can be adjusted. '1' indicates the lowest possible speed, '10' the highest.
+
+![controls_speed.png](app\static\controls_speed.png)
+
+
+At the bottom of the control panel, there are two input fields for __adjusting the size of the grid__. You can specify the number of rows and columns you want the grid to have. The maximum possible number of rows is 35 and the maximum possible number of columns is 50. To set the grid size, press 'set grid size'.
+
+![controls_size.png](app\static\controls_size.png)
