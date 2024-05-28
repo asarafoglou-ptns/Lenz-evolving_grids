@@ -7,7 +7,6 @@ setuptools.setup(
     author_email='sarah.lenz@student.uva.nl',
     python_requires='>= 3.8',
     install_requires=[
-        'typing==3.10.0.0',
         'shiny==0.9.0',
         'htmltools==0.5.1',
         'uvicorn==0.29.0',
