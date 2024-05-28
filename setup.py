@@ -16,6 +16,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     package_data={
         'app': ['static/*'],  # Include all files in the static folder
+        '': ['requirements.txt']  # include requirements.txt at the root level
     },
     include_package_data=True,
 )

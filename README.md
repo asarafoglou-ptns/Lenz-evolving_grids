@@ -60,15 +60,21 @@ The following screenshot shows the entire app (how it looks when you run and ope
 
 ### 4. How to install and use the app
 #### Installing and running the app
-In the following, I will illustrate the steps you need to take to download and run the app on your laptop. Before you follow the steps outlined below, please make sure that you have Python (https://www.python.org/downloads/) installed on your computer.
+In the following, I will illustrate the steps you need to take to download and run the app on your laptop. 
 
-__1__ Install the package in your Python IDE using `pip install git+https://github.com/asarafoglou-ptns/Lenz-evolving_grids.git`
+__1__ Make sure that Python is installed on your computer. If you haven't installed Python yet, you can do it here: https://www.python.org/downloads/
 
-Now you will have my directory on your computer. Before we proceed, here is an explanation of the contents of the repository:
+__2__ Download the `evolving_grids-1.0-py3-none-any.whl` file from my github repository (https://github.com/asarafoglou-ptns/Lenz-evolving_grids/blob/week-3/dist/evolving_grids-1.0-py3-none-any.whl).
 
-Within the root directory there is a `LICENSE`, `README.ipynb`, `requirements.txt`, `final_report.md` and a `setup.py` file (TODO). These are not very relevant, except maybe check out the `README.md` (although this report will fill you in more extensively).
+__3__ Locate the downloaded `evolving_grids-1.0-py3-none-any.whl` file on your computer and copy the file path.
 
-There is also one folder called `app`. This folder contains the code of the app itself. Let me run you through the individual files:
+__4__ Open a terminal (e.g., _command prompt_ on Windows or _Terminal_ on iOS) on your computer.
+
+__5__ Install the evolving_grids package by typing `pip install` followed by the path to the downloaded `evolving_grids-1.0-py3-none-any.whl` file. The entire command could look something like this: `pip install C:\Users\sarah\IdeaProjects\evolving_grids\dist\evolving_grids-1.0-py3-none-any.whl`
+
+Now the package is installed on your computer under the name `app`. Before we proceed, here is an explanation of the contents of the package:
+
+Within the `app` package folder, you can find all the code for the shinyapp. Let me run you through the individual files:
 * folder `static`, which contains static files, like the stylesheet (`ui.css`) and a couple of .png files used for this report (`final_report.md`)
 * several files with code:
     * `__init__.py` indicates to Python that the directory is a Python package
@@ -78,14 +84,26 @@ There is also one folder called `app`. This folder contains the code of the app 
     * `run.py`  setup for running an ASGI (Asynchronous Server Gateway Interface) application using the Uvicorn server
     * `shiny_extensions.py` extensions to the standard Shiny for Python to make the app work
 
-__2__ Import the package into your IDE using `import evolving_grids`
+__6__ Next, you need to find out where exactly you installed the package. You can do this by typing `pip show evolving_grids` in your terminal. This will give you something like this:
+````python
+>> Name: evolving_grids
+>> Version: 1.0
+>> Summary:
+>> Home-page:
+>> Author: sarah_lenz
+>> Author-email: sarah.lenz@student.uva.nl
+>> License:
+>> Location: C:\Users\sarah\AppData\Local\Programs\Python\Python312\Lib\site-packages
+>> Requires: htmltools, shiny, starlette, uvicorn
+>> Required-by:
+````
 
-TODO try running command from 4. from root directory and if it works, remove:
-__3__ Locate the imported evolving_grids package within your IDE navigate to the `app` folder within the package (cd path\to\evolving_grids\app)
+__7__ Copy the path that indicates the location of the package (in this example `C:\Users\sarah\AppData\Local\Programs\Python\Python312\Lib\site-packages`).
 
-__4__ Start the app by executing the `run.py` module using `python -m evolving_grids.app.run`
+__8__ Change the directory to the `app` folder within `C:\Users\sarah\AppData\Local\Programs\Python\Python312\Lib\site-packages` using `cd C:\Users\sarah\AppData\Local\Programs\Python\Python312\Lib\site-packages\app` (make sure to replace the path with the path to the package on your computer and to add \app at the end of the path).
 
-__5__ Now, you can the app! Enjoy! You can also use my code and make changes to the app, like styling it in a different way or adding more features to it.
+__9__ Start the app by running `python run.py` in your terminal. Now, there should appear a link (something like `http://127.0.0.1:8000`). Clicking on this link should open the app in your browser.
+
 
 #### How to use the app
 
@@ -111,6 +129,40 @@ At the bottom of the control panel, there are two input fields for __adjusting t
 ![controls_size.png](app\static\controls_size.png)
 
 
+#### How to use an exemplary function from the package
+The evolving_grids package contains several functions, which are required to run the app. Generally, none of these functions is intended to be used by the users. However, one of the course requirements is that one of the functions from the package needs to be usable. Therefore, I chose `create_new_generation()` as an exemplary function from the package and made it available for users.
+Please follow the steps outlined below to use the `create_new_generation()` function (please note that you need to install the package on your computer before following the steps outlined below. If you haven't done so already, please follow steps 1 through 5 from the section _Installing and running the app_):
+
+__1__ If the app is still running, stop the app in the terminal.
+
+__2__ If Python is still active in your console, exit python by typing `exit()`
+
+__3__ Now, navigate back to the directory in which your `app` folder lives using `cd` and the path to the package (again, you get the path by typing `pip show evolving_grids`) and copying the path reference.
+
+__4__ Start Python by typing `python` in your console
+
+__5__ Import the evolving_grids package by typing `import evolving_grids`
+
+__6__ The create_new_generation() function takes one argument: a grid with 1s and 0s of any size. To test the function, you therefore need to set up a grid with only 1s and 0s and hand this grid to the function. You can set up a random 5x5 grid with 1s and 0s using the following code (feel free to adapt the code so that you have bigger or smaller grids):
+````python
+import random
+
+def generate_grid(rows, cols):
+    grid = []
+    for _ in range(rows):
+        row = [random.choice([0, 1]) for _ in range(cols)]
+        grid.append(row)
+    return grid
+
+def print_grid(grid):
+    for row in grid:
+        print(" ".join(map(str, row)))
+
+rows = 5
+cols = 5
+grid = generate_grid(rows, cols)
+````
+__7__ Pass your grid to the create_new_generation() function by typing `app.create_new_generation(grid)`. The function should return a new grid with 0s and 1s indicating which of the cells in your grid stays alive/comes alive or dies in the next generation according to the game rules.
 
 If there are any issues, suggestions or fixes required for the app, please don't hesitate to reach out through github.
 
