@@ -7,9 +7,9 @@ from app.grid_functions import Grid, copy_grid
 
 def is_valid_pos(row, column, nrows, ncols) -> bool:
     """
-    function checks whether a position is a valid position in an array (e.g.,
+    checks whether a position is a valid position in an array (e.g.,
     position [-1,-1] would not be valid because it's outside the bounds of the
-    array)
+    array).
     :param row: row in array
     :param column: column in array
     :param nrows: number of rows in array
@@ -92,7 +92,7 @@ def create_new_generation(grid: Grid) -> Grid:
     for row_idx, row in enumerate(grid):
         for col_idx, cell_value in enumerate(row):
             alive = get_number_of_adjacent_live_cells(grid, row_idx, col_idx)
-            # Apply the rules to keep cells alive, bring them alive, or kill
+            # here, I implement the rules to keep cells alive, bring them alive, or kill
             # cells to generate the new generation.
             # The new generation of alive and dead cells is stored in the copy
             # of the original grid.
