@@ -29,7 +29,7 @@ __Purpose:__ Scenario that describes the purpose, use and functionalities of the
 
 __Individual:__ A university student at the UvA, in the first year of their Master’s.
 
-__Equipment:__ A laptop or computer on which Python, the evolving_grids package and the dependencies listed in `requirements.txt` are installed.
+__Equipment:__ A laptop or computer on which Python is installed.
 
 __Scenario:__ A student is bored during class and decides to play Conway’s Game of Life on their laptop to pass the time until the break.
 
@@ -64,18 +64,12 @@ In the following, I will illustrate the steps you need to take to download and r
 
 __1__ Make sure that Python is installed on your computer. If you haven't installed Python yet, you can do it here: https://www.python.org/downloads/
 
-__2__ Download the `evolving_grids-1.0-py3-none-any.whl` file from my github repository (https://github.com/asarafoglou-ptns/Lenz-evolving_grids/blob/week-3/dist/evolving_grids-1.0-py3-none-any.whl).
-
-__3__ Locate the downloaded `evolving_grids-1.0-py3-none-any.whl` file on your computer and copy the file path.
-
-__4__ Open a terminal (e.g., _command prompt_ on Windows or _Terminal_ on iOS) on your computer.
-
-__5__ Install the evolving_grids package by typing `pip install` followed by the path to the downloaded `evolving_grids-1.0-py3-none-any.whl` file. The entire command could look something like this: `pip install C:\Users\sarah\IdeaProjects\evolving_grids\dist\evolving_grids-1.0-py3-none-any.whl`
+__2__ Install the evolving_grids package using the following command: `pip install evolving_grids@git+https://github.com/asarafoglou-ptns/Lenz-evolving_grids.git#egg=evolving_grids`
 
 Now the package is installed on your computer under the name `app`. Before we proceed, here is an explanation of the contents of the package:
 
-Within the `app` package folder, you can find all the code for the shinyapp. Let me run you through the individual files:
-* folder `static`, which contains static files, like the stylesheet (`ui.css`) and a couple of .png files used for this report (`final_report.md`)
+Within the `app` folder, you can find all the code for the shinyapp. Let me run you through the individual files:
+* folder `static`, which contains static files, like the stylesheet (`ui.css`) and a couple of .png files used for this README.
 * several files with code:
     * `__init__.py` indicates to Python that the directory is a Python package
     * `app.py` contains the code for user interface and background processes of the app
@@ -84,25 +78,25 @@ Within the `app` package folder, you can find all the code for the shinyapp. Let
     * `run.py`  setup for running an ASGI (Asynchronous Server Gateway Interface) application using the Uvicorn server
     * `shiny_extensions.py` extensions to the standard Shiny for Python to make the app work
 
-__6__ Next, you need to find out where exactly you installed the package. You can do this by typing `pip show evolving_grids` in your terminal. This will give you something like this:
+__3__ Next, you need to find out where exactly you installed the package. You can do this by typing `pip show evolving_grids` in your terminal. This will give you something like this:
 ````python
 >> Name: evolving_grids
 >> Version: 1.0
->> Summary:
+>> Summary: A Python package for playing Conway´s Game of Life
 >> Home-page:
 >> Author: sarah_lenz
 >> Author-email: sarah.lenz@student.uva.nl
->> License:
+>> License: MIT
 >> Location: C:\Users\sarah\AppData\Local\Programs\Python\Python312\Lib\site-packages
 >> Requires: htmltools, shiny, starlette, uvicorn
 >> Required-by:
 ````
 
-__7__ Copy the path that indicates the location of the package (in this example `C:\Users\sarah\AppData\Local\Programs\Python\Python312\Lib\site-packages`).
+__4__ Copy the path that indicates the location of the package (in this example `C:\Users\sarah\AppData\Local\Programs\Python\Python312\Lib\site-packages`).
 
-__8__ Change the directory to the `app` folder within `C:\Users\sarah\AppData\Local\Programs\Python\Python312\Lib\site-packages` using `cd C:\Users\sarah\AppData\Local\Programs\Python\Python312\Lib\site-packages\app` (make sure to replace the path with the path to the package on your computer and to add \app at the end of the path).
+__5__ Change the directory to the `app` folder within `C:\Users\sarah\AppData\Local\Programs\Python\Python312\Lib\site-packages` using `cd C:\Users\sarah\AppData\Local\Programs\Python\Python312\Lib\site-packages\app` (make sure to __replace the path__ in the example with the path to the package on your computer and to __add \app at the end of the path__).
 
-__9__ Start the app by running `python run.py` in your terminal. Now, there should appear a link (something like `http://127.0.0.1:8000`). Clicking on this link should open the app in your browser.
+__6__ Now you can start the app by running `python run.py` in your terminal. Now, there should appear a link (something like `http://127.0.0.1:8000`). Clicking on this link should open the app in your browser.
 
 
 #### How to use the app
@@ -131,7 +125,7 @@ At the bottom of the control panel, there are two input fields for __adjusting t
 
 #### How to use an exemplary function from the package
 The evolving_grids package contains several functions, which are required to run the app. Generally, none of these functions is intended to be used by the users. However, one of the course requirements is that one of the functions from the package needs to be usable. Therefore, I chose `create_new_generation()` as an exemplary function from the package and made it available for users.
-Please follow the steps outlined below to use the `create_new_generation()` function (please note that you need to install the package on your computer before following the steps outlined below. If you haven't done so already, please follow steps 1 through 5 from the section _Installing and running the app_):
+Please follow the steps outlined below to use the `create_new_generation()` function (please note that you need to install the package on your computer before following the steps outlined below. If you haven't done so already, please follow steps 1 and 2 from the section _Installing and running the app_ before trying to use the function):
 
 __1__ If the app is still running, stop the app in the terminal.
 
@@ -141,9 +135,9 @@ __3__ Now, navigate back to the directory in which your `app` folder lives using
 
 __4__ Start Python by typing `python` in your console
 
-__5__ Import the evolving_grids package by typing `import evolving_grids`
+__5__ Import the function by typing `from app import create_new_generation`
 
-__6__ The create_new_generation() function takes one argument: a grid with 1s and 0s of any size. To test the function, you therefore need to set up a grid with only 1s and 0s and hand this grid to the function. You can set up a random 5x5 grid with 1s and 0s using the following code (feel free to adapt the code so that you have bigger or smaller grids):
+__6__ The create_new_generation() function takes one argument: a grid with 1s and 0s of any size. To test the function, you therefore need to set up a grid with only 1s and 0s and pass this grid to the function. You can set up a random 5x5 grid with 1s and 0s using the following code (feel free to adapt the code so that you have bigger or smaller grids):
 ````python
 import random
 
@@ -162,7 +156,7 @@ rows = 5
 cols = 5
 grid = generate_grid(rows, cols)
 ````
-__7__ Pass your grid to the create_new_generation() function by typing `app.create_new_generation(grid)`. The function should return a new grid with 0s and 1s indicating which of the cells in your grid stays alive/comes alive or dies in the next generation according to the game rules.
+__7__ Pass your grid to the create_new_generation() function (`create_new_generation(grid)`). The function then returns a new grid with 0s and 1s indicating which of the cells in your grid stays alive/comes alive or dies in the next generation according to the game rules.
 
 If there are any issues, suggestions or fixes required for the app, please don't hesitate to reach out through github.
 
