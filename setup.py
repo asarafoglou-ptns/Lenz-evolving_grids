@@ -5,6 +5,8 @@ setuptools.setup(
     version='1.0',
     author='sarah_lenz',
     author_email='sarah.lenz@student.uva.nl',
+    description='A Python package for playing Conway´s Game of Life',
+    license='MIT',
     python_requires='>=3.8',
     install_requires=[
         'shiny==0.9.0',
