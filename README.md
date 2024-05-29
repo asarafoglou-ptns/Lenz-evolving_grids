@@ -21,7 +21,13 @@ Version 1.0.0
 1. Scenario
 2. Flowchart
 3. Screenshots of the app
-4. How to install and use the app
+4. How to for users
+
+   4.1 How to install and run the app
+
+   4.2 How to use the app
+
+   4.3 How to use an exemplary function from the package
 
 ### 1. Scenario
 
@@ -58,8 +64,8 @@ The following screenshot shows the entire app (how it looks when you run and ope
 ![full_page.png](app\static\full_page.png)
 
 
-### 4. How to install and use the app
-#### Installing and running the app
+### 4. How to for users
+#### 4.1 How to install and run the app
 In the following, I will illustrate the steps you need to take to download and run the app on your laptop. 
 
 __1__ Make sure that Python is installed on your computer. If you haven't installed Python yet, you can do it here: https://www.python.org/downloads/
@@ -99,7 +105,7 @@ __5__ Change the directory to the `app` folder within `C:\Users\sarah\AppData\Lo
 __6__ Now you can start the app by running `python run.py` in your terminal. Now, there should appear a link (something like `http://127.0.0.1:8000`). Clicking on this link should open the app in your browser.
 
 
-#### How to use the app
+#### 4.2 How to use the app
 
 ##### The Grid
 As explained above, the __game grid__ is located at the bottom right of the page. To play Conway's Game of Life, you need to bring some of the cells to life by clicking on them. Alive cells are marked in orange, dead cells are white.
@@ -123,7 +129,7 @@ At the bottom of the control panel, there are two input fields for __adjusting t
 ![controls_size.png](app\static\controls_size.png)
 
 
-#### How to use an exemplary function from the package
+#### 4.3 How to use an exemplary function from the package
 The evolving_grids package contains several functions, which are required to run the app. Generally, none of these functions is intended to be used by the users. However, one of the course requirements is that one of the functions from the package needs to be usable. Therefore, I chose `create_new_generation()` as an exemplary function from the package and made it available for users.
 Please follow the steps outlined below to use the `create_new_generation()` function (please note that you need to install the package on your computer before following the steps outlined below. If you haven't done so already, please follow steps 1 and 2 from the section _Installing and running the app_ before trying to use the function):
 
