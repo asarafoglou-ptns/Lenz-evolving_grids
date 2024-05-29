@@ -78,10 +78,15 @@ def get_number_of_adjacent_live_cells(
 
 def create_new_generation(grid: Grid) -> Grid:
     """
-    determines which cells in an array live or die from one generation to the
-    next, based on their number of alive neighbours
-    :param grid: array with alive and dead cells, for which the next generation
-                 should be determined
+    This function generates the new generation of alive in dead cells within Conway's Game
+    of Life. It determines which cells in a given array (the game grid) live or die from
+    one generation to the next, based on the cells' number of alive neighbours. Alive cells
+    with more than three neighbours die, alive cells with two or three neighbours stay alive,
+    alive cells with less than two neighbours die and dead cells with exactly three
+    neighbours come alive from one generation to the next.
+    :param grid: array with alive and dead cells, for which the next generation should
+                 be determined; alive cells should be indicated by 1, while dead cells
+                 should be marked with 0
     :return: array with values indicating which cells survive/come alive/die in
              the new generation
     """
