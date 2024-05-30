@@ -1,16 +1,19 @@
 # Evolving Grids
 
-Python app with which you can play Conway's Game of Life (for the course 'Programming: The Next Step' at University of Amsterdam).
-Check it out here: https://github.com/asarafoglou-ptns/Lenz-evolving_grids
-
 Version 1.0.0
 
-- Evolving Grids allows you to play Conway's Game of Life on your device
-- You can bring cells alive/kill them by clicking on the grid
-- You can adjust the size of the game grid
-- You can adjust the speed of the simulation to make it run faster or more slowly
-- You can pause the simulation and make adjustments to your cell-setup
-- The elements are automatically scaled to the size of your screen
+Evolving Grids is a dynamic Python application that allows you to experience Conway's Game of Life on your device. This interactive app provides a range of features to enhance your gameplay and experimentation with cellular automata:
+
+* Interactive Grid: Click on the grid to bring cells to life or to kill them.
+* Adjustable Grid Size: Customize the size of the game grid to your preference.
+* Variable Simulation Speed: Control the speed of the simulation, making it run faster or more slowly according to your needs.
+* Pause and Edit: Pause the simulation at any time to make adjustments to your cell setup.
+* Responsive Design: The elements are automatically scaled to fit the size of your screen for optimal viewing and interaction.
+
+In addition to the main gameplay features, the codebase includes a number of Python functions designed for grid manipulation. These functions can be valuable for developers who are interested in working with grids, offering a versatile toolkit for their own projects.
+
+Evolving Grids was developed for the the course 'Programming: The Next Step' at University of Amsterdam.
+Check it out here: https://github.com/asarafoglou-ptns/Lenz-evolving_grids
 
 ## Limitations
 
