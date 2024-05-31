@@ -38,7 +38,7 @@ __Purpose:__ Scenario that describes the purpose, use and functionalities of the
 
 __Individual:__ A university student at the UvA, in the first year of their Master’s.
 
-__Equipment:__ A laptop or computer on which Python is installed.
+__Equipment:__ A laptop or computer with Python installed, along with the evolving_grids package and its dependencies (shiny, htmltools, uvicorn, and starlette).
 
 __Scenario:__ A student is bored during class and decides to play Conway’s Game of Life on their laptop to pass the time until the break.
 
